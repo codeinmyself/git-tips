@@ -18,6 +18,8 @@ Git是一个 “分布式版本管理工具”。
    - git文件：版本库
 
    问题：工作区和暂存区的区别？
+   
+   放入暂存区实际上就是姜文件加入版本管理，放入工作区（commit）则是将暂存区的改变提交到某个分支，默认是master分支。
 
 
 ## 目录
@@ -160,7 +162,7 @@ git diff <commit-id> <commit-id>
 git diff --cached
 ```
 
-## 展示暂存区、工作区和最近版本的不同
+## 展示暂存区、工作区和最近版本的不同(diff)
 
 输出**工作区**、**暂存区** 和本地最近的版本 (commit) 的 different (不同)。
 
@@ -168,24 +170,18 @@ git diff --cached
 git diff HEAD
 ```
 
-## 快速切换分支上一个分支
+## 快速切换分支上一个分支(-)
 
 ```sh
 git checkout -
 ```
 
-## 删除已经合并到 master 的分支
-
-```sh
-git branch --merged master | grep -v '^\*\|  master' | xargs -n 1 git branch -d
-```
-
-## 展示本地分支关联远程仓库的情况
+## 展示本地分支关联远程仓库的情况(-vv)
 ```sh
 git branch -vv
 ```
 
-## 关联远程分支
+## 关联远程分支（-u）
 
 关联之后，`git branch -vv` 就可以展示关联的远程分支名了，同时推送到远程仓库直接：`git push`，不需要指定远程仓库了。
 ```sh
@@ -197,14 +193,14 @@ git branch -u origin/mybranch
 git push origin/mybranch -u
 ```
 
-## 列出所有远程分支
+## 列出所有远程分支(-r)
 
 -r 参数相当于：remote
 ```sh
 git branch -r
 ```
 
-## 列出本地和远程分支
+## 列出本地和远程分支(-a)
 
 -a 参数相当于：all
 ```sh
@@ -216,13 +212,13 @@ git branch -a
 git checkout -b <branch-name>
 ```
 
-## 从远程分支中创建并切换到本地分支
+## 从远程分支中创建并切换到本地分支(-b)
 
 ```sh
 git checkout -b <branch-name> origin/<branch-name>
 ```
 
-## 删除本地分支
+## 删除本地分支(-d)
 
 ```sh
 git branch -d <local-branchname>
@@ -246,7 +242,7 @@ git push origin :<remote-branchname>
 git branch -m <new-branch-name>
 ```
 
-## 查看标签
+## 查看标签(tag)
 
 ```sh
 git tag
@@ -263,7 +259,7 @@ git describe --tags --abbrev=0
 git tag -ln
 ```
 
-## 本地创建标签
+## 本地创建标签(tag)
 
 ```sh
 git tag <version-number>
@@ -302,7 +298,7 @@ git tag -d <tag-name>
 git push origin :refs/tags/<tag-name>
 ```
 
-## 切回到某个标签
+## 切回到某个标签(上线前打标签)
 
 一般上线之前都会打 tag，就是为了防止上线后出现问题，方便快速回退到上一版本。下面的命令是回到某一标签下的状态：
 ```sh
@@ -332,7 +328,7 @@ git checkout <deleting_commit>^ -- <file_path> #回到删除文件 deleting_comm
 git revert <commit-id>
 ```
 
-## 回到某个 commit 的状态，并删除后面的 commit
+## 回到某个 commit 的状态，并删除后面的 commit(reset)
 
 和 revert 的区别：reset 命令会抹去某个 commit id 之后的所有 commit
 
@@ -366,7 +362,7 @@ git blame <file-name>
 
 ## 显示本地更新过 HEAD 的 git 命令记录
 
-每次更新了 HEAD 的 git 命令比如 commint、amend、cherry-pick、reset、revert 等都会被记录下来（不限分支），就像 shell 的 history 一样。
+每次更新了 HEAD 的 git 命令比如 commit、amend、cherry-pick、reset、revert 等都会被记录下来（不限分支），就像 shell 的 history 一样。
 这样你可以 reset 到任何一次更新了 HEAD 的操作之后，而不仅仅是回到当前分支下的某个 commit 之后的状态。
 
 ```sh
